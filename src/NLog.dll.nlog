@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <variable name="level-w5"
+            value="${pad:padding=-5:fixedLength=true:inner=${level:uppercase=true}}" />
+  <variable name="mylayout"
+            value="${longdate} [${level-w5}] ${logger:shortName=true} -- ${message}" />
+  <targets>
+    <target name="console" xsi:type="ColoredConsole" layout="${mylayout}" />
+    <target name="logfile" xsi:type="File" layout="${mylayout}"
+            fileName="${environment:variable=nlogfile}" />
+  </targets>
+  <rules>
+    <logger name="*" minlevel="Info"  writeTo="console" />
+    <logger name="*" minlevel="Debug" writeTo="logfile" />
+  </rules>
+</nlog>
